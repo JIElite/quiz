@@ -5,10 +5,10 @@ EXEC = iterative recursive
 all: $(EXEC)
 
 iterative: iterative.c
-	$(CC) $(CFLAGS_common) -o $@ $@.c
+	$(CC) $(CFLAGS_common) -o $@ $@.c list.c
 
 recursive: recursive.c
-	$(CC) $(CFLAGS_common) -o $@ $@.c
+	$(CC) $(CFLAGS_common) -o $@ $@.c list.c
 
 clean:
 	$(RM) $(EXEC) *.o perf.*
