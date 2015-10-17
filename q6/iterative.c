@@ -5,45 +5,53 @@
 #include "list.h"
 
 
-struct HeadTail{
+struct HeadTail {
     struct ListNode *head;
     struct ListNode *tail;
 };
 
-struct HeadTail* reverseList(struct ListNode *head){
+struct HeadTail* reverseList(struct ListNode *head)
+{
     struct ListNode *current = head;
     struct ListNode *prev = NULL;
     struct ListNode *next = NULL;
 
-    while(current){
+    while(current) {
         next = current->next;
         current->next = prev;
         prev = current;
         current = next;
     }
-    
+
     struct HeadTail *res = malloc(sizeof(struct HeadTail));
     res->head = prev;
     res->tail = head;
     return res;
 }
 
-struct ListNode *reverseBetween(struct ListNode *head, int m, int n){
+struct ListNode *reverseBetween(struct ListNode *head, int m, int n)
+{
     if (m == n) return head;
 
     struct ListNode *p = head;
     struct ListNode *start = NULL;
     struct ListNode *end = NULL;
-    
-    /* get start position, end position 
+
+    /* get start position, end position
      * The start position is m-1, end is n
      */
-    if (m == 1) { start = head; }
-    for (int i = 1; i <= n && p; i++){
-        if (i == m-1) { start = p; }
-        if (i == n) { end = p;}
+    if (m == 1) {
+        start = head;
+    }
+    for (int i = 1; i <= n && p; i++) {
+        if (i == m-1) {
+            start = p;
+        }
+        if (i == n) {
+            end = p;
+        }
 
-        p = p->next;   
+        p = p->next;
     }
     struct ListNode *after_end = end->next;
     /* let end->next = NULL so that we can reuse reverseList function*/
@@ -51,13 +59,12 @@ struct ListNode *reverseBetween(struct ListNode *head, int m, int n){
 
     /* reconnect linked list */
     struct HeadTail *res = NULL;
-    if (m == 1) { 
+    if (m == 1) {
         res = reverseList(start);
         res->tail->next = after_end;
         head = res->head;
-    }
-    else { 
-        res = reverseList(start->next); 
+    } else {
+        res = reverseList(start->next);
         start->next = res->head;
         res->tail->next = after_end;
     }
@@ -68,11 +75,14 @@ struct ListNode *reverseBetween(struct ListNode *head, int m, int n){
 
 int main()
 {
+
+
     struct ListNode *head = NULL;
-    for (int i = 1; i <= 5; i++){
+    for (int i = 1; i <= 10000; i++) {
         head = append(head, i);
     }
-    
+    reverseBetween(head, 1, 10000);
+
 #if CASE == 1
     /* case 1 */
     printf("reverse m = 2,  n = 3: ");
@@ -94,18 +104,18 @@ int main()
 #endif
 
 
-#if CASE == 4 
+#if CASE == 4
     /* case 4 end position is end of list */
     printf("reverse m = 3,  n = 5: ");
     traverse(reverseBetween(head, 3, 5));
-#endif 
+#endif
 
 
 #if CASE == 5
     /* case 5 inside the list */
     printf("reverse m = 2,  n = 4: ");
     traverse(reverseBetween(head, 2, 4));
-#endif 
+#endif
 
     return 0;
 }
