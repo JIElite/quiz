@@ -1,7 +1,7 @@
 #ifndef H_LIST
 #define H_LIST
 
-struct ListNode{
+struct ListNode {
     int val;
     struct ListNode *next;
 };
@@ -13,4 +13,4 @@ void traverse(struct ListNode *p);
 struct ListNode* append(struct ListNode *head, int val);
 
 
-#endif 
+#endif
