@@ -3,19 +3,11 @@
 
 #include "unit_test.h"
 
-char find_smallest(char *str, char c, char result, int i)
+char find_smallest(char *str, char c, char result)
 {
-    if (str[i] != '\0') {
-        if (str[i] == c) {
-            while(str[i++] != '\0') {
-                if (str[i] > c) {
-                    result = str[i];
-                    return result;
-                }
-            }
-        }
-
-        return find_smallest(str, c, result, i+1);
+    if (*str) {
+        if (*str > c) return *str;
+        else return find_smallest(str+1, c, result);
     }
     return result;
 }
@@ -23,7 +15,7 @@ char find_smallest(char *str, char c, char result, int i)
 
 char smallest_char_rev(char str[], char c)
 {
-    if ( *str != '\0') return find_smallest(str, c, str[0], 0);
+    if ( *str != '\0') return find_smallest(str, c, str[0]);
     return *str;
 }
 
@@ -40,7 +32,7 @@ int main()
     unit_test(smallest_char_rev, 'c', str, 'v');
 
     unit_test(smallest_char_rev, 'b', str2, 'a');
-    unit_test(smallest_char_rev, 'a', str2, 'd');
+    unit_test(smallest_char_rev, 'e', str2, 'd');
     unit_test(smallest_char_rev, 'g', str2, 'f');
     unit_test(smallest_char_rev, 'e', str2, 'c');
 
