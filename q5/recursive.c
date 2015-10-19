@@ -53,7 +53,7 @@ int main()
     hasCycle(NULL);
     hasCycle(linear_list);
     hasCycle(cycle_list);
-    
+
     /* free memory */
     free_list(linear_list);
     free_list(cycle_list);

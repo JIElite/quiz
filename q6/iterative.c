@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 #include "list.h"
 
+#define CASE 0
 
 struct HeadTail {
     struct ListNode *head;
@@ -69,19 +69,21 @@ struct ListNode *reverseBetween(struct ListNode *head, int m, int n)
         res->tail->next = after_end;
     }
 
+    /* release temp message created by reverseList() */
+    if (res != NULL) free(res);
+
     return head;
 }
 
 
 int main()
 {
-
-
     struct ListNode *head = NULL;
     for (int i = 1; i <= 10000; i++) {
         head = append(head, i);
     }
-    reverseBetween(head, 1, 10000);
+    head = reverseBetween(head, 1, 10000);
+
 
 #if CASE == 1
     /* case 1 */
@@ -116,6 +118,9 @@ int main()
     printf("reverse m = 2,  n = 4: ");
     traverse(reverseBetween(head, 2, 4));
 #endif
+
+    /* release memory */
+    free_list(head);
 
     return 0;
 }

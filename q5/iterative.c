@@ -9,7 +9,7 @@ struct ListNode* hasCycle(struct ListNode *head)
     struct ListNode *fast;
     struct ListNode *slow;
     fast = slow = head;
-    
+
     while (slow && fast && fast->next) {
         slow = slow->next;
         fast = fast->next->next;

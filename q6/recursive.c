@@ -11,7 +11,7 @@ struct ListNode *reverse(struct ListNode *start, struct ListNode *current,
 
     if (count != total && next) {
         struct ListNode *next2 = next->next;
-        next -> next = current;
+        next->next = current;
         return reverse(start, next, next2, count+1, total, ishead);
     } else {
         if (ishead) {
@@ -29,11 +29,11 @@ struct ListNode *reverse(struct ListNode *start, struct ListNode *current,
 
 struct ListNode *reverseBetween(struct ListNode *head, int m, int n)
 {
-    if (m == n ) return head;
+    if (m == n) return head;
 
     struct ListNode *entry = head;
     for ( int i = 1; i < m-1; i++) {
-        entry = entry -> next;
+        entry = entry->next;
     }
     if (m == 1) {
         head = reverse(entry, entry, entry->next, 0, n-m, 1);
@@ -51,7 +51,7 @@ int main()
     for (int i = 1; i <= 10000; i++) {
         head = append(head, i);
     }
-    reverseBetween(head, 1, 10000);
+    head = reverseBetween(head, 1, 10000);
 
 
 
@@ -85,6 +85,8 @@ int main()
     printf("reverse m = 2,  n = 4: ");
     traverse(reverseBetween(head, 2, 4));
 #endif
+
+    free_list(head);
 
     return 0;
 }

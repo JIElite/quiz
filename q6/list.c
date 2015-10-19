@@ -43,7 +43,7 @@ void free_list(struct ListNode *head)
         current = current->next;
         free(prev);
     }
-    
+
     return;
 }
 
