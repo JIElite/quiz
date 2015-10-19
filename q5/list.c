@@ -7,7 +7,7 @@ void traverse_list(struct ListNode *head)
 {
     while(head) {
         printf("%d\n", head->val);
-        head = head -> next;
+        head = head->next;
     }
     return;
 }
@@ -16,8 +16,8 @@ void traverse_list(struct ListNode *head)
 struct ListNode* create_node(int val)
 {
     struct ListNode *new_node = (struct ListNode *)malloc(sizeof(struct ListNode));
-    new_node -> val = val;
-    new_node -> next = NULL;
+    new_node->val = val;
+    new_node->next = NULL;
     return new_node;
 }
 
@@ -31,8 +31,8 @@ struct ListNode *create_cycle_list(int cycle_pos, int size)
 
     for (int i = 1; i <= size; i++) {
         if (i == cycle_pos) list_head = parse;
-        parse -> next = create_node(i);
-        parse = parse -> next;
+        parse->next = create_node(i);
+        parse = parse->next;
     }
     parse->next = list_head->next;
 
@@ -51,6 +51,5 @@ struct ListNode *create_linear_list(int size)
     }
     return list_head;
 }
-
 
 

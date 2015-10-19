@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "list.h"
 
@@ -17,11 +18,27 @@ struct ListNode* detect_cycle_rec(struct ListNode *slow, struct ListNode *fast)
     return NULL;
 }
 
-struct ListNode* hasCycle_rev(struct ListNode *head)
+struct ListNode* hasCycle(struct ListNode *head)
 {
     return detect_cycle_rec(head, head);
 }
 
+void free_list(struct ListNode *head)
+{
+    struct ListNode *current = head;
+    struct ListNode *prev = NULL;
+    struct ListNode *cycleNode = NULL;
+
+    while ((cycleNode = hasCycle(head)) != NULL) {
+        cycleNode->next = NULL;
+    }
+
+    while (current) {
+        prev = current;
+        current = current->next;
+        free(prev);
+    }
+}
 
 int main()
 {
@@ -32,9 +49,13 @@ int main()
     //traverse_list(cycle_list);
     traverse_list(linear_list);
 
-    hasCycle_rev(NULL);
-    hasCycle_rev(linear_list);
-    hasCycle_rev(cycle_list);
-
+    /* detected cycle */
+    hasCycle(NULL);
+    hasCycle(linear_list);
+    hasCycle(cycle_list);
+    
+    /* free memory */
+    free_list(linear_list);
+    free_list(cycle_list);
     return 0;
 }
