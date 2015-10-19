@@ -12,5 +12,6 @@ void traverse(struct ListNode *p);
 
 struct ListNode* append(struct ListNode *head, int val);
 
+void free_list(struct ListNode *head);
 
 #endif
