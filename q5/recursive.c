@@ -29,7 +29,7 @@ void free_list(struct ListNode *head)
     struct ListNode *prev = NULL;
     struct ListNode *cycleNode = NULL;
 
-    while ((cycleNode = hasCycle(head)) != NULL) {
+    if ((cycleNode = hasCycle(head)) != NULL) {
         cycleNode->next = NULL;
     }
 
