@@ -3,18 +3,22 @@
 
 #include "list.h"
 
-
-struct ListNode* hasCycle(struct ListNode *head)
+struct ListNode* detectCycle(struct ListNode *head)
 {
-    struct ListNode *fast;
-    struct ListNode *slow;
-    fast = slow = head;
+    struct ListNode *fast = NULL;
+    struct ListNode *slow = NULL;
+    struct ListNode *finder = NULL;
+    finder = fast = slow = head;
 
-    while (slow && fast && fast->next) {
+    while (fast && fast->next) {
         slow = slow->next;
         fast = fast->next->next;
         if (slow == fast) {
-            return fast;
+            while(finder != slow) {
+                finder = finder->next;
+                slow = slow->next;
+            }
+            return finder;
         }
     }
 
@@ -26,10 +30,12 @@ void free_list(struct ListNode *head)
 {
     struct ListNode *current = head;
     struct ListNode *prev = NULL;
-    struct ListNode *cycleNode = NULL;
+    struct ListNode *cycleNode = detectCycle(head);
 
-    if ((cycleNode = hasCycle(head)) != NULL) {
-        cycleNode->next = NULL;
+    struct ListNode *p = cycleNode;
+    while (p != NULL) {
+        if (p->next == cycleNode) p->next = NULL;
+        p = p->next;
     }
 
     while (current) {
@@ -47,9 +53,9 @@ int main()
     struct ListNode *linear_list = create_linear_list(5);
 
     /* detect cycle */
-    hasCycle(NULL);
-    hasCycle(linear_list);
-    hasCycle(cycle_list);
+    detectCycle(NULL);
+    detectCycle(linear_list);
+    detectCycle(cycle_list);
 
     /* free memory */
     free_list(linear_list);
