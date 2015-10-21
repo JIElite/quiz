@@ -4,33 +4,40 @@
 #include "list.h"
 
 
-struct ListNode* detect_cycle_rec(struct ListNode *slow, struct ListNode *fast)
+struct ListNode* detectCycleRec(struct ListNode *slow, struct ListNode *fast, struct ListNode *result, int is_meet)
 {
-    if (slow && fast && fast->next) {
-        slow = slow->next;
-        fast = fast->next->next;
-        if (slow == fast) {
-            return fast;
+       
+    if (fast && fast->next) {
+        if (is_meet){
+            if (slow == result) return result;
+            else return detectCycleRec(slow->next, fast, result->next, 1);
         }
-        return detect_cycle_rec(slow, fast);
+        else{
+            if (slow == fast && is_meet == 0) return detectCycleRec(slow, fast, result, 1);
+            return detectCycleRec(slow->next, fast->next->next, result, 0);
+        }
     }
 
     return NULL;
+
 }
 
-struct ListNode* hasCycle(struct ListNode *head)
+struct ListNode* detectCycle(struct ListNode *head)
 {
-    return detect_cycle_rec(head, head);
+    if (head == NULL || head->next == NULL) return NULL;
+    return detectCycleRec(head->next, head->next->next, head, 0);
 }
 
 void free_list(struct ListNode *head)
 {
     struct ListNode *current = head;
     struct ListNode *prev = NULL;
-    struct ListNode *cycleNode = NULL;
+    struct ListNode *cycleNode = detectCycle(head);
 
-    if ((cycleNode = hasCycle(head)) != NULL) {
-        cycleNode->next = NULL;
+    struct ListNode *p = cycleNode;
+    while (p != NULL) {
+        if (p->next == cycleNode) p->next = NULL;
+        p = p->next;
     }
 
     while (current) {
@@ -50,9 +57,9 @@ int main()
     traverse_list(linear_list);
 
     /* detected cycle */
-    hasCycle(NULL);
-    hasCycle(linear_list);
-    hasCycle(cycle_list);
+    detectCycle(NULL);
+    detectCycle(linear_list);
+    detectCycle(cycle_list);
 
     /* free memory */
     free_list(linear_list);
