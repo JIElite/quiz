@@ -4,11 +4,11 @@ CFLAGS_common ?= -O0 -Wall -std=gnu99
 EXEC = iterative recursive
 all: $(EXEC)
 
-iterative: iterative.c
-	$(CC) $(CFLAGS_common) -o $@ $@.c list.c
+iterative: 
+	$(CC) $(CFLAGS_common)  -o iterative main.c list.c iterative.c -D METHOD=1
 
-recursive: recursive.c
-	$(CC) $(CFLAGS_common) -o $@ $@.c list.c
+recursive: 
+	$(CC) $(CFLAGS_common)  -o recursive main.c list.c recursive.c -D METHOD=2
 
 clean:
 	$(RM) $(EXEC) *.o perf.*
