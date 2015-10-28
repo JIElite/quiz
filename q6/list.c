@@ -23,6 +23,19 @@ struct ListNode* append(struct ListNode *head, int val)
 
 }
 
+struct ListNode* create_list(int start, int end)
+{
+    struct ListNode *head = create_node(start);
+    struct ListNode *p = head;
+    
+    for (int i = start+1; i <= end; i++){
+        p->next = create_node(i);
+        p = p->next;
+    }
+    
+    return head;
+}
+
 void traverse(struct ListNode *head)
 {
     struct ListNode *p = head;

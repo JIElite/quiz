@@ -8,9 +8,11 @@ struct ListNode {
 
 struct ListNode *create_node(int val);
 
-void traverse(struct ListNode *p);
-
 struct ListNode* append(struct ListNode *head, int val);
+
+struct ListNode* create_list(int start, int end);
+
+void traverse(struct ListNode *p);
 
 void free_list(struct ListNode *head);
 
