@@ -2,10 +2,10 @@
 #include <stdlib.h>
 
 #include "list.h"
+#include "recursive.h"
 
 
-
-struct ListNode *reverse(struct ListNode *start, struct ListNode *current,
+static struct ListNode *reverse(struct ListNode *start, struct ListNode *current,
                          struct ListNode *next, int remain_times, int ishead)
 {
 
@@ -44,44 +44,3 @@ struct ListNode *reverseBetween(struct ListNode *head, int m, int n)
     return head;
 }
 
-int main(int argc, char *argv[])
-{
-
-    
-    struct ListNode *head = create_list(1, 5);
-
-    int test_case = atoi(argv[1]);
-    /* case 1 */
-    if (test_case == 1){
-        printf("reverse m = 2,  n = 3: ");
-        traverse(reverseBetween(head, 2, 3));
-    }
-
-    /* case 2 reverse full list */
-    if (test_case == 2){
-        printf("reverse m = 1,  n = 5: ");
-        traverse(reverseBetween(head, 1, 5));
-    }
-
-    /* case 3 start position is head */
-    if (test_case == 3){ 
-        printf("reverse m = 1,  n = 4: ");
-        traverse(reverseBetween(head, 1, 4));
-    }
-
-    /* case 4 end position is end of list */
-    if (test_case == 4){
-        printf("reverse m = 3,  n = 5: ");
-        traverse(reverseBetween(head, 3, 5));
-    }
-    
-    /* case 5 inside the list */
-    if (test_case == 5){
-        printf("reverse m = 2,  n = 4: ");
-        traverse(reverseBetween(head, 2, 4));
-    }
-
-    free_list(head);
-
-    return 0;
-}
