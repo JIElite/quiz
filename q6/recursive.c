@@ -6,13 +6,13 @@
 
 
 struct ListNode *reverse(struct ListNode *start, struct ListNode *current,
-                         struct ListNode *next, int count, int total, int ishead)
+                         struct ListNode *next, int remain_times, int ishead)
 {
 
-    if (count != total && next) {
+    if (remain_times && next) {
         struct ListNode *next2 = next->next;
         next->next = current;
-        return reverse(start, next, next2, count+1, total, ishead);
+        return reverse(start, next, next2, remain_times-1, ishead);
     } else {
         if (ishead) {
             start->next = next;
@@ -36,55 +36,50 @@ struct ListNode *reverseBetween(struct ListNode *head, int m, int n)
         entry = entry->next;
     }
     if (m == 1) {
-        head = reverse(entry, entry, entry->next, 0, n-m, 1);
+        head = reverse(entry, entry, entry->next, n-m, 1);
     } else {
-        reverse(entry, entry->next, entry->next->next, 0, n-m, 0);
+        reverse(entry, entry->next, entry->next->next, n-m, 0);
     }
 
     return head;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
 
-    struct ListNode *head = NULL;
-    for (int i = 1; i <= 10000; i++) {
-        head = append(head, i);
-    }
-    head = reverseBetween(head, 1, 10000);
+    
+    struct ListNode *head = create_list(1, 5);
 
-
-
-#if CASE == 1
+    int test_case = atoi(argv[1]);
     /* case 1 */
-    printf("reverse m = 2,  n = 3: ");
-    traverse(reverseBetween(head, 2, 3));
-#endif
+    if (test_case == 1){
+        printf("reverse m = 2,  n = 3: ");
+        traverse(reverseBetween(head, 2, 3));
+    }
 
-#if CASE == 2
     /* case 2 reverse full list */
-    printf("reverse m = 1,  n = 5: ");
-    traverse(reverseBetween(head, 1, 5));
-#endif
+    if (test_case == 2){
+        printf("reverse m = 1,  n = 5: ");
+        traverse(reverseBetween(head, 1, 5));
+    }
 
-#if CASE == 3
     /* case 3 start position is head */
-    printf("reverse m = 1,  n = 4: ");
-    traverse(reverseBetween(head, 1, 4));
-#endif
+    if (test_case == 3){ 
+        printf("reverse m = 1,  n = 4: ");
+        traverse(reverseBetween(head, 1, 4));
+    }
 
-
-#if CASE == 4
     /* case 4 end position is end of list */
-    printf("reverse m = 3,  n = 5: ");
-    traverse(reverseBetween(head, 3, 5));
-#endif
-
-#if CASE == 5
+    if (test_case == 4){
+        printf("reverse m = 3,  n = 5: ");
+        traverse(reverseBetween(head, 3, 5));
+    }
+    
     /* case 5 inside the list */
-    printf("reverse m = 2,  n = 4: ");
-    traverse(reverseBetween(head, 2, 4));
-#endif
+    if (test_case == 5){
+        printf("reverse m = 2,  n = 4: ");
+        traverse(reverseBetween(head, 2, 4));
+    }
 
     free_list(head);
 
