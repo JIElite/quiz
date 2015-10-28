@@ -2,13 +2,15 @@
 #include <stdlib.h>
 
 #include "list.h"
+#include "iterative.h"
 
-#define CASE 0
+
 
 struct HeadTail {
     struct ListNode *head;
     struct ListNode *tail;
 };
+
 
 struct HeadTail* reverseList(struct ListNode *head)
 {
@@ -75,52 +77,3 @@ struct ListNode *reverseBetween(struct ListNode *head, int m, int n)
     return head;
 }
 
-
-int main()
-{
-    struct ListNode *head = NULL;
-    for (int i = 1; i <= 10000; i++) {
-        head = append(head, i);
-    }
-    head = reverseBetween(head, 1, 10000);
-
-
-#if CASE == 1
-    /* case 1 */
-    printf("reverse m = 2,  n = 3: ");
-    traverse(reverseBetween(head, 2, 3));
-#endif
-
-
-#if CASE == 2
-    /* case 2 reverse full list */
-    printf("reverse m = 1,  n = 5: ");
-    traverse(reverseBetween(head, 1, 5));
-#endif
-
-
-#if CASE == 3
-    /* case 3 start position is head */
-    printf("reverse m = 1,  n = 4: ");
-    traverse(reverseBetween(head, 1, 4));
-#endif
-
-
-#if CASE == 4
-    /* case 4 end position is end of list */
-    printf("reverse m = 3,  n = 5: ");
-    traverse(reverseBetween(head, 3, 5));
-#endif
-
-
-#if CASE == 5
-    /* case 5 inside the list */
-    printf("reverse m = 2,  n = 4: ");
-    traverse(reverseBetween(head, 2, 4));
-#endif
-
-    /* release memory */
-    free_list(head);
-
-    return 0;
-}
